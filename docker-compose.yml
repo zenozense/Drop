@@ -1,12 +1,41 @@
 services:
   slot:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: slot
     restart: unless-stopped
-    env_file: .env
+    init: true
+
+    env_file:
+      - ./.ENV
+
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATA_DIR: /app/data
+
     ports:
       - "3000:3000"
+
     volumes:
-      - slot-data:/data
+      - slot_data:/app/data
+
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/config').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
-  slot-data:
+  slot_data:
+    name: slot_data
