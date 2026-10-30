@@ -12,24 +12,10 @@
 </head>
 <body class="admin" data-view="boot">
 
-  <!-- Sign-in: the other side of the slot -->
-  <main class="signin" id="signin" hidden>
-    <a class="mark" href="/">Slot</a>
-    <form class="sheet-form" id="login-form" novalidate>
-      <h1>Team sign-in</h1>
-      <p class="sub">Use your directory account to see what clients have sent.</p>
-
-      <p class="form-error" id="login-error" role="alert" hidden></p>
-
-      <label class="field-label" for="username">Username</label>
-      <input class="input" id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
-
-      <label class="field-label" for="password">Password</label>
-      <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
-
-      <button class="btn btn--blue" id="login-btn" type="submit">Sign in</button>
-    </form>
-  </main>
+  <!-- Authentication loading -->
+<main class="signin" id="auth-loading">
+    <p>Verifying your NaCl Auth session...</p>
+</main>
 
   <!-- Inbox -->
   <div class="app" id="app" hidden>
