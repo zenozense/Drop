@@ -13,7 +13,7 @@ const GB = 1024 ** 3;
 
 module.exports = {
   // Server
-  port: num(process.env.PORT, 3000),
+  port: num(process.env.PORT, 8080),
   dataDir: path.resolve(
     process.env.DATA_DIR || path.join(__dirname, 'data')
   ),
