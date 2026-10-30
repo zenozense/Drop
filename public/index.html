@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2430E0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Slot – send files to the team</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/base.css">
+  <link rel="stylesheet" href="/drop.css">
+</head>
+<body class="field">
+  <div class="wrap">
+    <header><a class="mark" href="/">Slot</a></header>
+
+    <main class="stage">
+      <section class="say">
+        <h1>Send files to the team.</h1>
+        <p>No account needed. Whatever you send is deleted after <span data-ttl>24 hours</span>.</p>
+      </section>
+
+      <section class="send" aria-label="Upload files">
+        <div class="who">
+          <label for="sender">Your name or a note for the team (optional)</label>
+          <input id="sender" type="text" maxlength="200" autocomplete="name" placeholder="Nok from Accounting, invoices for October">
+        </div>
+
+        <button class="slot" id="slot" type="button">
+          <span class="slot-main">Drop files here</span>
+          <span class="slot-sub">or choose them from your device</span>
+          <span class="slot-hint">You can also paste an image with Ctrl+V.</span>
+        </button>
+        <input id="file" type="file" multiple hidden>
+
+        <ol class="slips" id="slips"></ol>
+      </section>
+    </main>
+
+    <footer class="foot">
+      Anyone on the team can open what you send.
+      <a href="/admin">Team sign-in</a>
+    </footer>
+  </div>
+
+  <div class="catch" aria-hidden="true">Release to send.</div>
+  <p class="sr-only" id="announce" role="status"></p>
+
+  <script type="module" src="/js/drop.js"></script>
+</body>
+</html>

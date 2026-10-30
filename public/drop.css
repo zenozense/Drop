@@ -1,0 +1,355 @@
+/* The client side of the slot: one ultramarine field, one ink opening, paper receipts. */
+
+body.field {
+  background: var(--blue);
+  color: var(--paper);
+  --focus: var(--lemon);
+}
+
+.wrap {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 1.25rem 1rem 1.5rem;
+  gap: 1.75rem;
+}
+
+.mark {
+  font: 800 1.15rem/1 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.stage {
+  display: grid;
+  gap: 1.75rem;
+  align-content: start;
+}
+
+/* Intro ------------------------------------------------------------------- */
+.say h1 {
+  font: 700 clamp(1.7rem, 7.4vw, 2.3rem) / 1.08 var(--display);
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+}
+.say p {
+  margin-top: 0.9rem;
+  max-width: 34ch;
+  font-size: 1.05rem;
+  color: var(--on-blue-soft);
+}
+
+/* The slot ------------------------------------------------------------------ */
+.slot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: end;
+  gap: 0.3rem;
+  width: 100%;
+  min-height: 12.5rem;
+  padding: 2.4rem 1.4rem 1.4rem;
+  border: 0;
+  border-radius: 14px 14px 36px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  text-align: left;
+  transition: transform 0.14s ease-out;
+}
+/* the opening itself */
+.slot::before {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  left: 1.4rem;
+  right: 28%;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #02041a;
+  box-shadow: 0 1px 0 rgb(242 244 250 / 0.22);
+}
+.slot:hover {
+  transform: translateY(-2px);
+}
+.slot-main {
+  font: 700 1.55rem/1.1 var(--display);
+  letter-spacing: -0.02em;
+}
+.slot-sub {
+  font-size: 0.95rem;
+  color: #b9bfe0;
+}
+.slot-hint {
+  display: none;
+}
+
+.who {
+  margin-bottom: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+.who label {
+  font-size: 0.9rem;
+  color: var(--on-blue-soft);
+}
+.who input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.4rem 0;
+  border: 0;
+  border-bottom: 2px solid var(--on-blue-soft);
+  border-radius: 0;
+  background: transparent;
+  color: var(--paper);
+  font-size: 1.05rem;
+}
+.who input::placeholder {
+  color: #aab1f0;
+}
+.who input:focus {
+  outline: none;
+  border-bottom-color: var(--lemon);
+}
+
+/* Receipts ----------------------------------------------------------------- */
+.slips {
+  list-style: none;
+  margin: -1.1rem 0 0;
+  padding: 0 0.9rem;
+  position: relative;
+  z-index: 0;
+}
+.slips:empty {
+  display: none;
+}
+
+.slip {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "ext text act"
+    "bar bar bar";
+  align-items: center;
+  gap: 0.6rem 0.85rem;
+  padding: 1.5rem 0.75rem 0.85rem 0.9rem;
+  border-radius: 4px 4px 8px 8px;
+  background: var(--paper);
+  color: var(--ink);
+  animation: emerge 0.42s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+.slip + .slip {
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+}
+.slip:nth-child(3n + 2) {
+  margin-left: 0.5rem;
+  margin-right: -0.3rem;
+}
+.slip:nth-child(3n) {
+  margin-left: -0.2rem;
+  margin-right: 0.6rem;
+}
+
+@keyframes emerge {
+  from {
+    transform: translateY(-1.6rem);
+    opacity: 0;
+  }
+}
+
+.slip .ext {
+  grid-area: ext;
+}
+.slip[data-state="done"] .ext {
+  background: var(--mint);
+}
+.slip[data-state="error"] .ext {
+  background: var(--lemon);
+}
+
+.slip-text {
+  grid-area: text;
+  min-width: 0;
+}
+.slip-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.slip-status {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.slip[data-state="error"] .slip-status {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.slip-act {
+  grid-area: act;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.slip-act .btn {
+  min-height: 2.5rem;
+  padding: 0 0.8rem;
+  font-size: 0.9rem;
+}
+
+.meter {
+  grid-area: bar;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.meter > b {
+  display: block;
+  height: 100%;
+  background: var(--blue);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0));
+}
+.slip[data-state="done"] .meter > b {
+  background: var(--ink);
+}
+.slip[data-state="error"] .meter {
+  display: none;
+}
+
+/* Footer ------------------------------------------------------------------- */
+.foot {
+  font-size: 0.875rem;
+  color: var(--on-blue-soft);
+  max-width: 44ch;
+}
+.foot a {
+  color: var(--paper);
+  text-underline-offset: 3px;
+}
+
+/* Whole-window drop ----------------------------------------------------------- */
+.catch {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  align-content: end;
+  padding: 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 800 clamp(2.2rem, 11vw, 6.5rem) / 0.98 var(--display);
+  letter-spacing: -0.04em;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s, visibility 0s 0.12s;
+}
+body.is-dragging .catch {
+  opacity: 0.96;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Wider screens ------------------------------------------------------------------ */
+@media (min-width: 48rem) {
+  .wrap {
+    padding: 1.75rem 2.5rem 2rem;
+  }
+  .slot-hint {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #8d95d6;
+  }
+}
+
+@media (min-width: 62rem) {
+  .wrap {
+    padding: 2rem 4vw 2.25rem;
+    gap: 2rem;
+  }
+  .stage {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 7vw;
+    align-items: start;
+  }
+  .say {
+    align-self: end;
+    padding-bottom: 2rem;
+    position: sticky;
+    top: 40vh;
+  }
+  .say h1 {
+    font-size: clamp(2.6rem, 4.4vw, 4.4rem);
+    max-width: 11ch;
+  }
+  .send {
+    padding-top: 8vh;
+    max-width: 38rem;
+  }
+  .slot {
+    min-height: 15rem;
+    padding: 2.8rem 2rem 1.8rem;
+  }
+  .slot::before {
+    left: 2rem;
+  }
+  .slot-main {
+    font-size: 2rem;
+  }
+}
+
+/* Download page (admin -> client link) ---------------------------------------- */
+.sheet {
+  max-width: 34rem;
+  padding: 1.6rem 1.3rem 1.4rem;
+  border-radius: 4px 4px 28px 4px;
+  background: var(--paper);
+  color: var(--ink);
+  --focus: var(--blue);
+}
+.sheet .ext {
+  margin-bottom: 1rem;
+}
+.sheet h1 {
+  font: 700 clamp(1.3rem, 5.6vw, 1.8rem) / 1.15 var(--display);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.sheet .facts {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.sheet .btn {
+  margin-top: 1.4rem;
+  width: 100%;
+}
+.sheet .meter {
+  margin-top: 1.1rem;
+}
+.sheet-wrap {
+  display: grid;
+  align-content: end;
+}
+@media (min-width: 48rem) {
+  .sheet {
+    padding: 2rem 2rem 1.8rem;
+  }
+  .sheet .btn {
+    width: auto;
+    padding: 0 1.6rem;
+  }
+  .sheet-wrap {
+    padding-left: 8vw;
+  }
+}

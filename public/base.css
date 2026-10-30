@@ -1,0 +1,214 @@
+@font-face {
+  font-family: "Unbounded";
+  src: url("/fonts/unbounded-latin-wght-normal.woff2") format("woff2");
+  font-weight: 200 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Unbounded";
+  src: url("/fonts/unbounded-latin-ext-wght-normal.woff2") format("woff2");
+  font-weight: 200 900;
+  font-display: swap;
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/instrument-sans-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --blue: #2430e0;
+  --blue-deep: #1a23b3;
+  --ink: #0d1230;
+  --paper: #f2f4fa;
+  --paper-2: #e1e5f3;
+  --lemon: #ffe14d;
+  --mint: #7fe0b8;
+  --danger: #b3261e;
+  --muted: #474d78;
+  --on-blue-soft: color-mix(in srgb, var(--paper) 80%, var(--blue));
+
+  --display: "Unbounded", "Instrument Sans", system-ui, sans-serif;
+  --text: "Instrument Sans", "Noto Sans Thai", "Leelawadee UI", "Tahoma", system-ui, sans-serif;
+
+  --focus: var(--blue);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font: 400 1rem/1.5 var(--text);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Buttons ------------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 0.12s, color 0.12s, border-color 0.12s;
+}
+.btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+}
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--ink:hover {
+  background: #1c2350;
+}
+.btn--blue {
+  background: var(--blue);
+  color: var(--paper);
+}
+.btn--blue:hover {
+  background: var(--blue-deep);
+}
+.btn--line {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.btn--line:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--lemon {
+  background: var(--lemon);
+  color: var(--ink);
+}
+.btn--lemon:hover {
+  background: #ffd91f;
+}
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icon-only button, 44px target */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+}
+.icon-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.icon-btn:hover {
+  background: var(--paper-2);
+}
+
+/* File-type badge shared by both sides of the slot ------------------------- */
+.ext {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  border-radius: 4px;
+  font: 700 0.7rem/1 var(--display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.ext[data-g="doc"] {
+  background: var(--blue);
+  color: var(--paper);
+}
+.ext[data-g="image"] {
+  background: var(--mint);
+}
+.ext[data-g="video"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.ext[data-g="audio"] {
+  background: var(--lemon);
+}
+.ext[data-g="archive"] {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

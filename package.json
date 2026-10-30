@@ -1,0 +1,27 @@
+{
+  "name": "slot",
+  "version": "1.0.0",
+  "description": "Slot: anonymous file drop for clients, a signed-in inbox for the team, everything deleted after 24 hours",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "ADMIN_AUTH=dev node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "private": "true",
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource-variable/unbounded": "^5.3.0",
+    "archiver": "^8.0.0",
+    "busboy": "^1.6.0",
+    "express": "^5.3.0",
+    "ldapts": "^9.2.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

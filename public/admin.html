@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F2F4FA">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Slot – team inbox</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/base.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body class="admin" data-view="boot">
+
+  <!-- Sign-in: the other side of the slot -->
+  <main class="signin" id="signin" hidden>
+    <a class="mark" href="/">Slot</a>
+    <form class="sheet-form" id="login-form" novalidate>
+      <h1>Team sign-in</h1>
+      <p class="sub">Use your directory account to see what clients have sent.</p>
+
+      <p class="form-error" id="login-error" role="alert" hidden></p>
+
+      <label class="field-label" for="username">Username</label>
+      <input class="input" id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+
+      <label class="field-label" for="password">Password</label>
+      <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+
+      <button class="btn btn--blue" id="login-btn" type="submit">Sign in</button>
+    </form>
+  </main>
+
+  <!-- Inbox -->
+  <div class="app" id="app" hidden>
+    <header class="bar">
+      <a class="mark" href="/admin">Slot</a>
+      <span class="bar-user" id="who"></span>
+      <button class="btn btn--line btn--sm" id="logout" type="button">Sign out</button>
+    </header>
+
+    <div class="layout">
+      <aside class="rail">
+        <div class="tabs" role="tablist" aria-label="Direction">
+          <button class="tab" role="tab" id="tab-in" data-kind="in" aria-selected="true">Received <b id="count-in">0</b></button>
+          <button class="tab" role="tab" id="tab-out" data-kind="out" aria-selected="false">Sent out <b id="count-out">0</b></button>
+        </div>
+
+        <button class="btn btn--ink" id="open-send" type="button"></button>
+
+        <div class="storage" id="storage">
+          <p class="storage-text" id="storage-text"></p>
+          <div class="meter" aria-hidden="true"><b id="storage-bar"></b></div>
+          <button class="linkish" id="copy-drop" type="button">Copy the client page link</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="tools">
+          <div class="search">
+            <label class="sr-only" for="search">Search by file name or sender</label>
+            <input class="input" id="search" type="search" placeholder="Search file name or sender" autocomplete="off">
+          </div>
+          <div class="sort">
+            <label class="sr-only" for="sort">Sort</label>
+            <select class="input" id="sort">
+              <option value="new">Newest first</option>
+              <option value="soon">Expiring soonest</option>
+              <option value="big">Largest first</option>
+              <option value="name">Name</option>
+            </select>
+          </div>
+          <div class="chips" id="chips" role="group" aria-label="File type"></div>
+        </div>
+
+        <button class="linkish" id="select-all" type="button" hidden>Select all shown</button>
+        <ul class="rows" id="rows"></ul>
+        <div class="empty" id="empty" hidden></div>
+      </main>
+    </div>
+
+    <div class="bulk" id="bulk" hidden>
+      <p class="bulk-n" id="bulk-n"></p>
+      <a class="btn btn--lemon btn--sm" id="bulk-zip" href="#">Download zip</a>
+      <button class="btn btn--paper btn--sm" id="bulk-del" type="button">Delete</button>
+      <button class="btn btn--ghost btn--sm" id="bulk-clear" type="button">Clear</button>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="viewer-head">
+      <h2 id="viewer-title"></h2>
+      <a class="btn btn--line btn--sm" id="viewer-dl" href="#">Download</a>
+      <button class="icon-btn" id="viewer-close" type="button" aria-label="Close preview"></button>
+    </div>
+    <div class="viewer-body" id="viewer-body"></div>
+  </dialog>
+
+  <!-- Send a file out -->
+  <dialog class="sender" id="sender" aria-labelledby="sender-title">
+    <form method="dialog" class="sender-inner">
+      <h2 id="sender-title">Send a file to a client</h2>
+      <p class="sub">Upload it here and you get a link to give them. The link works without a sign-in and stops working after <span data-ttl>24 hours</span>.</p>
+
+      <div id="sender-pick">
+        <button class="drop-mini" id="sender-choose" type="button">Choose a file</button>
+        <input id="sender-file" type="file" hidden>
+      </div>
+
+      <div id="sender-progress" hidden>
+        <p class="sender-name" id="sender-name"></p>
+        <div class="meter"><b id="sender-bar"></b></div>
+        <p class="sub" id="sender-status"></p>
+      </div>
+
+      <div id="sender-done" hidden>
+        <label class="field-label" for="sender-link">Link for the client</label>
+        <div class="copyrow">
+          <input class="input" id="sender-link" type="text" readonly>
+          <button class="btn btn--blue" id="sender-copy" type="button">Copy link</button>
+        </div>
+      </div>
+
+      <p class="form-error" id="sender-error" role="alert" hidden></p>
+
+      <div class="dialog-actions">
+        <button class="btn btn--line" id="sender-close" value="close">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p class="toast" id="toast" role="status" hidden></p>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>
